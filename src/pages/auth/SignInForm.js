@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";	
+import React, { useContext, useState } from "react";
 import axios from "axios";
 
 import Form from "react-bootstrap/Form";
@@ -8,42 +8,44 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
-	
+
 import { Link, useHistory } from "react-router-dom";
 
 import styles from "../../styles/SignInUpForm.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import appStyles from "../../App.module.css";
-import { setCurrentUserContext } from "../../App";
+import { SetCurrentUserContext } from "../../App";
 
 function SignInForm() {
-    const setCurrentUser = useContext(setCurrentUserContext)
-    const [signInData, setSignInData] = useState({
-      username: "",
-      password: "",
-    });
-    const { username, password } = signInData;
+  const setCurrentUser = useContext(SetCurrentUserContext);
 
-    const [errors, setErrors] = useState({});
+  const [signInData, setSignInData] = useState({
+    username: "",
+    password: "",
+  });
+  const { username, password } = signInData;
 
-    const history = useHistory();
+  const [errors, setErrors] = useState({});
 
-    const handleChange = (event) => {
-    setSignInData({
-        ...signInData,
-        [event.target.name]: event.target.value,
-    });
-    };
-    const handleSubmit = async (event) => {
+  const history = useHistory();
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
     try {
-        const {data} = await axios.post("/dj-rest-auth/login/", signInData);
-        setCurrentUser(data.user)
-        history.push("/");
+      const { data } = await axios.post("/dj-rest-auth/login/", signInData);
+      setCurrentUser(data.user);
+      history.push("/");
     } catch (err) {
-        setErrors(err.response?.data);
+      setErrors(err.response?.data);
     }
-    };
+  };
+
+  const handleChange = (event) => {
+    setSignInData({
+      ...signInData,
+      [event.target.name]: event.target.value,
+    });
+  };
 
   return (
     <Row className={styles.Row}>
@@ -52,18 +54,18 @@ function SignInForm() {
           <h1 className={styles.Header}>sign in</h1>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="username">
-              <Form.Label className="d-none">username</Form.Label>
+              <Form.Label className="d-none">Username</Form.Label>
               <Form.Control
-                className={styles.Input}
                 type="text"
                 placeholder="Username"
                 name="username"
+                className={styles.Input}
                 value={username}
                 onChange={handleChange}
               />
             </Form.Group>
             {errors.username?.map((message, idx) => (
-              <Alert variant="warning" key={idx}>
+              <Alert key={idx} variant="warning">
                 {message}
               </Alert>
             ))}
@@ -71,10 +73,10 @@ function SignInForm() {
             <Form.Group controlId="password">
               <Form.Label className="d-none">Password</Form.Label>
               <Form.Control
-                className={styles.Input}
                 type="password"
                 placeholder="Password"
                 name="password"
+                className={styles.Input}
                 value={password}
                 onChange={handleChange}
               />
@@ -88,7 +90,7 @@ function SignInForm() {
               className={`${btnStyles.Button} ${btnStyles.Wide} ${btnStyles.Bright}`}
               type="submit"
             >
-              Sign In
+              Sign in
             </Button>
             {errors.non_field_errors?.map((message, idx) => (
               <Alert key={idx} variant="warning" className="mt-3">
@@ -96,7 +98,6 @@ function SignInForm() {
               </Alert>
             ))}
           </Form>
-
         </Container>
         <Container className={`mt-3 ${appStyles.Content}`}>
           <Link className={styles.Link} to="/signup">
