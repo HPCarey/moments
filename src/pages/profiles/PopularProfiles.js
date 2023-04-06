@@ -1,6 +1,6 @@
 import React from "react";
 import appStyles from "../../App.module.css";
-import { Container } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
 import Asset from "../../components/Assets";
 import { useProfileData } from "../../contexts/ProfileDataContext";
 import Profile from "./Profile";
