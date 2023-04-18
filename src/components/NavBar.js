@@ -31,15 +31,26 @@ const NavBar = () => {
   };
 
   const addPostIcon = (
-    <NavLink
-      className={styles.NavLink}
-      activeClassName={styles.Active}
-      to="/posts/create"
-    >
-      <i className="far fa-plus-square"></i>
-      Add post
-    </NavLink>
+    <>
+      <NavLink
+        className={styles.NavLink}
+        activeClassName={styles.Active}
+        to="/posts/create"
+      >
+        <i className="far fa-plus-square"></i>
+        Add post
+      </NavLink>
+      <NavLink
+        className={styles.NavLink}
+        activeClassName={styles.Active}
+        to="/events/create"
+      >
+        <i className="fa-regular fa-calendar-plus"></i>
+        Add event
+      </NavLink>
+    </>
   );
+
   const loggedInIcons = (
     <>
       <NavLink
@@ -49,6 +60,14 @@ const NavBar = () => {
       >
         <i className="fas fa-stream"></i>
         Feed
+      </NavLink>
+      <NavLink
+        className={styles.NavLink}
+        activeClassName={styles.Active}
+        to="/events"
+      >
+        <i className="fa-solid fa-calendar-days" />
+        Events
       </NavLink>
       <NavLink
         className={styles.NavLink}

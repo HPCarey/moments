@@ -27,6 +27,12 @@
   object-fit: contain;
 }
 
+.EventImage {
+  max-height: 20vh;
+  max-width: 50%;
+  object-fit: contain;
+}
+
 * {
   box-sizing: border-box;
 }

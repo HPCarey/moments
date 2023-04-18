@@ -15,6 +15,11 @@ import UsernameForm from "./pages/profiles/UsernameForm";
 import UserPasswordForm from "./pages/profiles/UserPasswordForm";
 import ProfileEditForm from "./pages/profiles/ProfileEditForm";
 import NotFound from "./components/NotFound";
+import EventEditForm from "./pages/events/EventEditForm";
+import EventPage from "./pages/events/EventPage";
+import EventCreateForm from "./pages/events/EventCreateForm";
+import EventsPage from "./pages/events/EventsPage";
+
 
 function App() {
   const currentUser = useCurrentUser();
@@ -56,6 +61,24 @@ function App() {
           <Route exact path="/posts/create" render={() => <PostCreateForm />} />
           <Route exact path="/posts/:id" render={() => <PostPage />} />
           <Route exact path="/posts/:id/edit" render={() => <PostEditForm />} />
+          <Route
+            exact
+            path="/events"
+            render={() => (
+              <EventsPage message="No events found. Add an event or check again later." />
+            )}
+          />
+          <Route
+            exact
+            path="/events/create"
+            render={() => <EventCreateForm />}
+          />
+          <Route exact path="/events/:id" render={() => <EventPage />} />
+          <Route
+            exact
+            path="/events/:id/edit"
+            render={() => <EventEditForm />}
+          />
           <Route exact path="/profiles/:id" render={() => <ProfilePage />} />
           <Route
             exact
