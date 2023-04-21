@@ -21,7 +21,6 @@ import { useRedirect } from "../../hooks/useRedirect";
 function EventCreateForm() {
   useRedirect("loggedOut");
   const [errors, setErrors] = useState({});
-  const [rating, setRating] = useState(0); //set the initial value for the rating
 
   const [eventData, setEventData] = useState({
     event_title: "",
@@ -34,7 +33,6 @@ function EventCreateForm() {
     email: "",
     phone: "",
     difficulty: "",
-    rating: "",
   });
 
   const {
@@ -50,9 +48,15 @@ function EventCreateForm() {
     difficulty,
   } = eventData;
 
+  const [rating, setRating] = useState(0); //set the initial value for the rating
+
   const imageInput = useRef(null);
 
   const history = useHistory();
+
+  const handleRating = (rating) => {
+    setRating(rating)
+  };
 
   const handleChange = (event) => {
     setEventData({
@@ -70,10 +74,7 @@ function EventCreateForm() {
       });
     }
   };
-
-  const handleRating = (rate) => {
-    setRating(rate /10);
-  };
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -82,7 +83,7 @@ function EventCreateForm() {
     formData.append("event_title", event_title);
     formData.append("event_description", event_description);
     formData.append("image", imageInput.current.files[0]);
-    formData.append("date", date);
+    formData.append("date", date); 
     formData.append("time", time);
     formData.append("country", country);
     formData.append("location", location);
@@ -104,7 +105,7 @@ function EventCreateForm() {
 
   const textFields = (
     <div className="text-center">
-      <Form.Group controlId="formBasicEmail">
+      <Form.Group>
         <Form.Label>Trail Name</Form.Label>
         <Form.Control
           type="text"
@@ -119,7 +120,7 @@ function EventCreateForm() {
         </Alert>
       ))}
 
-      <Form.Group controlId="formBasicPassword">
+      <Form.Group>
         <Form.Label>Trail description</Form.Label>
         <Form.Control
           as="textarea"
@@ -134,7 +135,7 @@ function EventCreateForm() {
           {message}
         </Alert>
       ))}
-      <Row className={styles.RowSpacing}>
+      
         <Form.Group>
           <Form.Label>Country:</Form.Label>
           <Form.Control
@@ -166,9 +167,9 @@ function EventCreateForm() {
             {message}
           </Alert>
         ))}
-      </Row>
+      
 
-      <Row className={styles.RowSpacing}>
+     
         <Form.Group>
           <Form.Label>Date:</Form.Label>
           <Form.Control
@@ -216,7 +217,6 @@ function EventCreateForm() {
             {message}
           </Alert>
         ))}
-      </Row>
 
       <Form.Group>
         <Form.Label>Trail difficulty:</Form.Label>
@@ -235,7 +235,11 @@ function EventCreateForm() {
       ))}
       <Form.Group>
         <Form.Label>Rate this trail:</Form.Label>
-        <Rating onClick={handleRating} /* Available Props */ />
+        <Rating
+                  type="int"
+                  name="rating"
+                  value={rating}
+                  onClick={handleRating} />
       </Form.Group>
       {errors?.difficulty?.map((message, idx) => (
         <Alert variant="danger" key={idx}>
@@ -260,7 +264,7 @@ function EventCreateForm() {
   return (
     <Form onSubmit={handleSubmit}>
       <Row>
-        <Col className="py-2 p-0 p-md-2" md={7} lg={8}>
+        <Col className="py-2 p-0 p-md-2" md={12} lg={10}>
           <Container
             className={`${appStyles.Content} ${styles.Container} d-flex flex-column justify-content-center`}
           >
@@ -268,7 +272,11 @@ function EventCreateForm() {
               {image ? (
                 <>
                   <figure>
-                    <Image className={appStyles.EventImage} src={image} rounded />
+                    <Image
+                      className={appStyles.EventImage}
+                      src={image}
+                      rounded
+                    />
                   </figure>
                   <div>
                     <Form.Label
@@ -303,7 +311,7 @@ function EventCreateForm() {
             <div className="d-md-none">{textFields}</div>
           </Container>
         </Col>
-        <Col md={5} lg={4} className="d-none d-md-block p-0 p-md-2">
+        <Col md={12} lg={10} className="d-none d-md-block p-0 p-md-2">
           <Container className={appStyles.Content}>{textFields}</Container>
         </Col>
       </Row>

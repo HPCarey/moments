@@ -31,7 +31,6 @@ function EventEditForm() {
     email: "",
     phone: "",
     difficulty: "",
-    rating: "",
   });
   const {
     event_title,
@@ -110,7 +109,7 @@ function EventEditForm() {
   };
 
   const handleRating = (rate) => {
-    setRating(rate /10);
+    setRating(rate /5);
   };
 
   const handleSubmit = async (event) => {

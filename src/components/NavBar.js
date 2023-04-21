@@ -13,6 +13,7 @@ import Avatar from "./Avatar";
 import axios from "axios";
 import useClickOutsideToggle from "../hooks/useClickOutsideToggle";
 import { removeTokenTimestamp } from "../utils/utils";
+import { NavDropdown } from "react-bootstrap";
 
 const NavBar = () => {
   const currentUser = useCurrentUser();
@@ -32,7 +33,7 @@ const NavBar = () => {
 
   const addPostIcon = (
     <>
-      <NavLink
+      {/* <NavLink
         className={styles.NavLink}
         activeClassName={styles.Active}
         to="/posts/create"
@@ -47,7 +48,7 @@ const NavBar = () => {
       >
         <i className="fa-regular fa-calendar-plus"></i>
         Add event
-      </NavLink>
+      </NavLink> */}
     </>
   );
 
@@ -77,16 +78,59 @@ const NavBar = () => {
         <i className="fas fa-heart"></i>
         Liked
       </NavLink>
-      <NavLink className={styles.NavLink} to="/" onClick={handleSignOut}>
+      {/* <NavLink className={styles.NavLink} to="/" onClick={handleSignOut}>
         <i className="fas fa-sign-out-alt"></i>
         Sign out
-      </NavLink>
-      <NavLink
+      </NavLink> */}
+      {/* <NavLink
         className={styles.NavLink}
         to={`/profiles/${currentUser?.profile_id}`}
       >
         <Avatar src={currentUser?.profile_image} text="Profile" height={40} />
-      </NavLink>
+      </NavLink> */}
+      <NavDropdown
+        className={styles.NavLink}
+        title={
+          <Avatar
+            src={currentUser?.profile_image}
+            text="My Profile"
+            height={40}
+          />
+        }
+        id="basic-nav-dropdown"
+      >
+        <NavDropdown.Item
+          className={styles.NavLink}
+          href={`/profiles/${currentUser?.profile_id}`}
+        >
+          <Avatar src={currentUser?.profile_image} text="Profile" height={40} />
+        </NavDropdown.Item>
+        {/* <NavLink className={styles.NavLink} to="/" onClick={handleSignOut}>
+          <i className="fas fa-sign-out-alt"></i>
+          Sign out
+        </NavLink> */}
+        {/* <NavLink
+          className={styles.NavLink}
+          activeClassName={styles.Active}
+          to="/posts/create"
+        >
+          <i className="far fa-plus-square"></i>
+          Add post
+        </NavLink> */}
+
+        <NavDropdown.Divider />
+        <NavDropdown.Item href="/posts/create">
+          {" "}
+          <i className="far fa-plus-square"></i>Add Post
+        </NavDropdown.Item>
+        <NavDropdown.Item href="/events/create">
+          <i className="fa-regular fa-calendar-plus"></i>Add event
+        </NavDropdown.Item>
+        <NavDropdown.Divider />
+        <NavDropdown.Item href="/" onClick={handleSignOut}>
+          <i className="fas fa-sign-out-alt"></i>Sign out
+        </NavDropdown.Item>
+      </NavDropdown>
     </>
   );
   const loggedOutIcons = (
@@ -122,7 +166,7 @@ const NavBar = () => {
             <img src={logo} alt="logo" height="45" />
           </Navbar.Brand>
         </NavLink>
-        {currentUser && addPostIcon}
+
         <Navbar.Toggle
           ref={ref}
           onClick={() => setExpanded(!expanded)}

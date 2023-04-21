@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import CommentCreateForm from "../comments/CommentCreateForm";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -15,10 +14,13 @@ import { fetchMoreData } from "../../utils/utils";
 import PopularProfiles from "../profiles/PopularProfiles";
 
 
+
 //Dsiplay the details of an individual event
 function EventPage() {
   const { id } = useParams();
   const [event, setEvent] = useState({ results: [] });
+  // const [rating, setRating] = useState({results: [] });
+ 
 
   const currentUser = useCurrentUser();
   const profile_image = currentUser?.profile_image;
@@ -26,10 +28,12 @@ function EventPage() {
   useEffect(() => {
     const handleMount = async () => {
       try {
-        const [{ data: event }] = await Promise.all([
+        const [{ data: event } ] = await Promise.all([
+          // const [{ data: event }, { data: rating }] = await Promise.all([
           axiosReq.get(`/events/${id}`),
         ]);
         setEvent({ results: [event] });
+        // setRating({results: [rating] });
         
       } catch (err) {
         // console.log(err);
@@ -43,6 +47,10 @@ function EventPage() {
       <Col className="py-2 p-0 p-lg-2" lg={8}>
         <PopularProfiles mobile />
         <Event {...event.results[0]} setEvents={setEvent} eventPage />
+        {/* <Rating {...rating.results[0]} setRatings={setRating} eventPage /> */}
+        <Container className={appStyles.Content}>
+          
+        </Container>
       </Col>
       <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
         <PopularProfiles />

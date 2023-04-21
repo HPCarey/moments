@@ -1,15 +1,13 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
 import Media from "react-bootstrap/Media";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Tooltip from "react-bootstrap/Tooltip";
 import { Link, useHistory } from "react-router-dom";
 import { axiosRes } from "../../api/axiosDefaults";
 import Avatar from "../../components/Avatar";
 import { MoreDropdown } from "../../components/MoreDropdown";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import styles from "../../styles/Post.module.css";
-
+import { Rating } from "react-simple-star-rating";
 
 const Event = (props) => {
   const {
@@ -31,7 +29,6 @@ const Event = (props) => {
     rating,
     created_on,
     eventPage,
-
   } = props;
 
   const currentUser = useCurrentUser();
@@ -61,11 +58,11 @@ const Event = (props) => {
           </Link>
           <div className="d-flex align-items-center">
             <span>{updated_at}</span>
-            {is_owner && eventPage && (	
-              <MoreDropdown	
-                handleEdit={handleEdit}	
-                handleDelete={handleDelete}	
-              />	
+            {is_owner && eventPage && (
+              <MoreDropdown
+                handleEdit={handleEdit}
+                handleDelete={handleDelete}
+              />
             )}
           </div>
         </Media>
@@ -74,27 +71,24 @@ const Event = (props) => {
         <Card.Img src={image} alt={event_title} />
       </Link>
       <Card.Body>
-        {event_title && <Card.Title className="text-center">{event_title}</Card.Title>}
+        {event_title && (
+          <Card.Title className="text-center">{event_title}</Card.Title>
+        )}
         {event_description && <Card.Text>{event_description}</Card.Text>}
         <div className={styles.PostBar}>
-        <p>
-        Date: {date} | Time: {time} 
-      </p>
-      <p>
-        Location: {location}, {country}
-      </p>
-      <p>
-        email: {email}, | phone: {phone}
-      </p>
-      <p>
-        difficulty: {difficulty}, | rating: {rating}
-      </p>
-      <p>
-        Submitted:
-        {' '}
-        {created_on}
-      </p>
-          
+          <p>
+            Date: {date} | Time: {time}
+          </p>
+          <p>
+            Location: {location}, {country}
+          </p>
+          <p>
+            email: {email}, | phone: {phone}
+          </p>
+          <p>difficulty: {difficulty}</p>
+          <p>
+            Rating:  <Rating readonly initialValue={rating} size={25} />
+          </p>
         </div>
       </Card.Body>
     </Card>
